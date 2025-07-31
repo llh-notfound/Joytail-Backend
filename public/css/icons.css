@@ -1,0 +1,133 @@
+/* PetPal 图标样式文件 */
+
+/* 基础图标样式 */
+.icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+
+.icon-small {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-large {
+  width: 32px;
+  height: 32px;
+}
+
+/* 点赞图标 */
+.icon-heart {
+  color: #666;
+  cursor: pointer;
+}
+
+.icon-heart:hover {
+  color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+.icon-heart.liked {
+  color: #ff6b6b;
+  animation: heartBeat 0.6s ease-in-out;
+}
+
+/* 收藏图标 */
+.icon-bookmark {
+  color: #666;
+  cursor: pointer;
+}
+
+.icon-bookmark:hover {
+  color: #ffa726;
+  transform: scale(1.1);
+}
+
+.icon-bookmark.collected {
+  color: #ffa726;
+  animation: bookmarkBounce 0.5s ease-in-out;
+}
+
+/* 评论图标 */
+.icon-comment {
+  color: #666;
+  cursor: pointer;
+}
+
+.icon-comment:hover {
+  color: #42a5f5;
+  transform: scale(1.1);
+}
+
+/* 动画效果 */
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.3); }
+  40% { transform: scale(1.1); }
+  60% { transform: scale(1.2); }
+  80% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes bookmarkBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2) rotate(5deg); }
+  100% { transform: scale(1); }
+}
+
+/* 图标按钮组合 */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.icon-button .count {
+  font-size: 14px;
+  color: #666;
+}
+
+/* 互动栏样式 */
+.interaction-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid #eee;
+  margin-top: 12px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .icon-button {
+    padding: 6px;
+    gap: 3px;
+  }
+  
+  .icon-button .count {
+    font-size: 12px;
+  }
+  
+  .interaction-bar {
+    gap: 12px;
+    padding: 8px 0;
+  }
+}

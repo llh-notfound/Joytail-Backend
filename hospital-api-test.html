@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetPal 医院API测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        h2 {
+            color: #666;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .api-section {
+            margin-bottom: 30px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .response {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .hospital-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+        }
+        .hospital-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .hospital-info {
+            color: #666;
+            margin: 5px 0;
+        }
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .service-tag {
+            background: #e7f3ff;
+            color: #0066cc;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        .rating {
+            color: #ff9500;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐾 PetPal 医院API测试页面</h1>
+        <p style="text-align: center; color: #666;">测试新实现的医院模块API接口</p>
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="./PetPal-医院模块前端对接API文档.md" style="color: #007bff; text-decoration: none; margin: 0 10px;">📖 完整API文档</a>
+            <a href="./前端对接快速入门.md" style="color: #007bff; text-decoration: none; margin: 0 10px;">🚀 快速入门</a>
+            <a href="./医院模块API更新说明.md" style="color: #007bff; text-decoration: none; margin: 0 10px;">📋 更新说明</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="api-section">
+            <h2>📋 1. 医院列表API</h2>
+            <p><strong>接口:</strong> GET /api/medical/hospitals</p>
+            <button class="test-button" onclick="testHospitalList()">测试医院列表</button>
+            <button class="test-button" onclick="showHospitalCards()">显示医院卡片</button>
+            <div id="hospital-list-response" class="response" style="display: none;"></div>
+            <div id="hospital-cards" style="display: none;"></div>
+        </div>
+
+        <div class="api-section">
+            <h2>🏥 2. 医院详情API</h2>
+            <p><strong>接口:</strong> GET /api/medical/hospitals/{id}</p>
+            <button class="test-button" onclick="testHospitalDetail(1)">测试医院1详情</button>
+            <button class="test-button" onclick="testHospitalDetail(2)">测试医院2详情</button>
+            <button class="test-button" onclick="testHospitalDetail(3)">测试医院3详情</button>
+            <button class="test-button" onclick="testHospitalDetail(999)">测试不存在医院</button>
+            <div id="hospital-detail-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="api-section">
+            <h2>⚙️ 3. 数据初始化API</h2>
+            <p><strong>接口:</strong> POST /api/medical/hospitals/initialize</p>
+            <button class="test-button" onclick="initializeHospitals()">重新初始化数据</button>
+            <div id="initialize-response" class="response" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080/api/medical';
+
+        async function testHospitalList() {
+            try {
+                const response = await fetch(`${API_BASE}/hospitals`);
+                const data = await response.json();
+                document.getElementById('hospital-list-response').style.display = 'block';
+                document.getElementById('hospital-list-response').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('hospital-list-response').style.display = 'block';
+                document.getElementById('hospital-list-response').textContent = '错误: ' + error.message;
+            }
+        }
+
+        async function showHospitalCards() {
+            try {
+                const response = await fetch(`${API_BASE}/hospitals`);
+                const data = await response.json();
+                const cardsContainer = document.getElementById('hospital-cards');
+                cardsContainer.style.display = 'block';
+                
+                if (data.code === 200 && data.data && data.data.list) {
+                    cardsContainer.innerHTML = data.data.list.map(hospital => `
+                        <div class="hospital-card">
+                            <div class="hospital-name">${hospital.name}</div>
+                            <div class="hospital-info">📍 ${hospital.address}</div>
+                            <div class="hospital-info">📞 ${hospital.phone}</div>
+                            <div class="hospital-info">⭐ <span class="rating">${hospital.rating}</span> | 🕒 ${hospital.business_hours}</div>
+                            <div class="hospital-info">🚨 24小时急诊: ${hospital.emergency_24h ? '是' : '否'}</div>
+                            <div class="services">
+                                ${hospital.services.map(service => `<span class="service-tag">${service}</span>`).join('')}
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    cardsContainer.innerHTML = '<p>无法获取医院数据</p>';
+                }
+            } catch (error) {
+                document.getElementById('hospital-cards').style.display = 'block';
+                document.getElementById('hospital-cards').innerHTML = '<p>错误: ' + error.message + '</p>';
+            }
+        }
+
+        async function testHospitalDetail(id) {
+            try {
+                const response = await fetch(`${API_BASE}/hospitals/${id}`);
+                const data = await response.json();
+                document.getElementById('hospital-detail-response').style.display = 'block';
+                document.getElementById('hospital-detail-response').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('hospital-detail-response').style.display = 'block';
+                document.getElementById('hospital-detail-response').textContent = '错误: ' + error.message;
+            }
+        }
+
+        async function initializeHospitals() {
+            try {
+                const response = await fetch(`${API_BASE}/hospitals/initialize`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                document.getElementById('initialize-response').style.display = 'block';
+                document.getElementById('initialize-response').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('initialize-response').style.display = 'block';
+                document.getElementById('initialize-response').textContent = '错误: ' + error.message;
+            }
+        }
+
+        // 页面加载时自动测试医院列表
+        window.onload = function() {
+            testHospitalList();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+/* PetPal 图标字体 - Font Awesome 样式 */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+/* 自定义图标类 */
+.petpal-icon {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 点赞图标 */
+.petpal-heart::before {
+  content: "\f004"; /* fa-heart */
+}
+
+.petpal-heart-outline::before {
+  content: "\f08a"; /* fa-heart-o */
+  font-weight: 400;
+}
+
+/* 收藏图标 */
+.petpal-bookmark::before {
+  content: "\f02e"; /* fa-bookmark */
+}
+
+.petpal-bookmark-outline::before {
+  content: "\f097"; /* fa-bookmark-o */
+  font-weight: 400;
+}
+
+/* 评论图标 */
+.petpal-comment::before {
+  content: "\f075"; /* fa-comment */
+}
+
+.petpal-comment-outline::before {
+  content: "\f0e5"; /* fa-comment-o */
+  font-weight: 400;
+}
+
+/* 分享图标 */
+.petpal-share::before {
+  content: "\f064"; /* fa-share */
+}
+
+/* 更多图标 */
+.petpal-more::before {
+  content: "\f141"; /* fa-ellipsis-h */
+}
+
+/* 图标按钮样式 */
+.petpal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #666;
+  text-decoration: none;
+}
+
+.petpal-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+/* 点赞按钮状态 */
+.petpal-btn.liked {
+  color: #ff6b6b;
+}
+
+.petpal-btn.liked .petpal-heart-outline::before {
+  content: "\f004"; /* 实心爱心 */
+  font-weight: 900;
+}
+
+.petpal-btn.liked:hover {
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+/* 收藏按钮状态 */
+.petpal-btn.collected {
+  color: #ffa726;
+}
+
+.petpal-btn.collected .petpal-bookmark-outline::before {
+  content: "\f02e"; /* 实心书签 */
+  font-weight: 900;
+}
+
+.petpal-btn.collected:hover {
+  background-color: rgba(255, 167, 38, 0.1);
+}
+
+/* 评论按钮状态 */
+.petpal-btn.comment:hover {
+  color: #42a5f5;
+  background-color: rgba(66, 165, 245, 0.1);
+}
+
+/* 动画效果 */
+@keyframes petpal-heart-beat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes petpal-bookmark-bounce {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.petpal-btn.liked .petpal-icon {
+  animation: petpal-heart-beat 0.6s ease;
+}
+
+.petpal-btn.collected .petpal-icon {
+  animation: petpal-bookmark-bounce 0.5s ease;
+}
+
+/* 互动栏布局 */
+.petpal-interaction-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 16px;
+}
+
+.petpal-interaction-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.petpal-interaction-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 计数器样式 */
+.petpal-count {
+  font-size: 12px;
+  color: #999;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .petpal-btn {
+    padding: 6px 8px;
+    font-size: 13px;
+    gap: 4px;
+  }
+  
+  .petpal-interaction-bar {
+    padding: 8px 0;
+  }
+  
+  .petpal-count {
+    font-size: 11px;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .petpal-btn {
+    color: #ccc;
+  }
+  
+  .petpal-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .petpal-interaction-bar {
+    border-top-color: #333;
+  }
+  
+  .petpal-count {
+    color: #888;
+  }
+}
