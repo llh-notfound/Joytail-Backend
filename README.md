@@ -96,7 +96,7 @@ Create a `.env` file in the root directory with the following variables:
 
 ```env
 # Server Configuration
-PORT=3000
+PORT=8080
 NODE_ENV=development
 
 # Redis Configuration
@@ -196,7 +196,7 @@ eslint .
 docker build -t joytail-backend .
 
 # Run container
-docker run -p 3000:3000 joytail-backend
+docker run -p 8080:8080 joytail-backend
 ```
 
 ### Environment Variables
